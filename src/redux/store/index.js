@@ -1,6 +1,6 @@
-import { createStore, compose, applyMiddleware } from 'redux'
+import { createStore, compose, applyMiddleware, combineReducers } from 'redux'
 import thunk from 'redux-thunk'
-import { mainReducer } from '../reducers'
+import { albumReducer, artistReducer, songsReducer } from '../reducers'
 
 const ultimateCompose = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
@@ -11,12 +11,19 @@ export const initialState = {
         likedSongs: []
     },
     artist: {
-
+        artistId: 368,
+        selectedArtist: {}
     },
     album: {
-
+        selectedAlbum: {}
     }
 }
+
+const mainReducer = combineReducers({
+    songs: songsReducer,
+    artist: artistReducer,
+    album: albumReducer
+})
 
 const configureStore = createStore(
     mainReducer,

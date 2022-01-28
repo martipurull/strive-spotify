@@ -30,7 +30,7 @@ const HomeDisplay = () => {
     }
 
     useEffect(() => {
-        getData('bowie')
+        getData('sting')
     }, [])
 
     return (

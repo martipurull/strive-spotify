@@ -1,33 +1,48 @@
-import { ADD_TO_LIKED_SONGS, ADD_TO_PLAYING_QUEUE, SELECT_SONG } from '../actions'
+import { ADD_TO_LIKED_SONGS, ADD_TO_PLAYING_QUEUE, SELECT_SONG, SET_SELECTED_ARTIST, SET_SELECTED_ALBUM } from '../actions'
 import { initialState } from '../store'
 
-export const mainReducer = (state = initialState, action) => {
+export const songsReducer = (state = initialState.songs, action) => {
     switch (action.type) {
         case ADD_TO_PLAYING_QUEUE: {
             return {
                 ...state,
-                songs: {
-                    ...state.songs,
-                    playingQueue: [...state.songs.playingQueue, action.payload]
-                }
+                playingQueue: [...state.songs.playingQueue, action.payload]
             }
         }
         case SELECT_SONG: {
             return {
                 ...state,
-                songs: {
-                    ...state.songs,
-                    selectedSong: action.payload
-                }
+                selectedSong: action.payload
             }
         }
         case ADD_TO_LIKED_SONGS: {
             return {
                 ...state,
-                songs: {
-                    ...state.songs,
-                    likedSongs: [...state.songs.likedSongs, action.payload]
-                }
+                likedSongs: [...state.songs.likedSongs, action.payload]
+            }
+        }
+        default: return state
+    }
+}
+
+export const artistReducer = (state = initialState.artist, action) => {
+    switch (action.type) {
+        case SET_SELECTED_ARTIST: {
+            return {
+                ...state,
+                selectedArtist: action.payload
+            }
+        }
+        default: return state
+    }
+}
+
+export const albumReducer = (state = initialState.album, action) => {
+    switch (action.type) {
+        case SET_SELECTED_ALBUM: {
+            return {
+                ...state,
+                selectedAlbum: action.payload
             }
         }
         default: return state
