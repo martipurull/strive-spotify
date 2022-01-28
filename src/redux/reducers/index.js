@@ -1,4 +1,4 @@
-import { ADD_TO_LIKED_SONGS, ADD_TO_PLAYING_QUEUE, SELECT_SONG, SET_SELECTED_ARTIST, SET_SELECTED_ALBUM } from '../actions'
+import { ADD_TO_LIKED_SONGS, ADD_TO_PLAYING_QUEUE, SELECT_SONG, SET_SELECTED_ARTIST, SET_SELECTED_ALBUM, SET_HOME_DISPLAY } from '../actions'
 import { initialState } from '../store'
 
 export const songsReducer = (state = initialState.songs, action) => {
@@ -31,6 +31,12 @@ export const artistReducer = (state = initialState.artist, action) => {
             return {
                 ...state,
                 selectedArtist: action.payload
+            }
+        }
+        case SET_HOME_DISPLAY: {
+            return {
+                ...state,
+                homeDisplay: action.payload
             }
         }
         default: return state

@@ -11,8 +11,9 @@ export const initialState = {
         likedSongs: []
     },
     artist: {
-        artistId: 368,
-        selectedArtist: {}
+        selectedArtist: {},
+        topThreeSongs: [],
+        homeDisplay: []
     },
     album: {
         selectedAlbum: {}
