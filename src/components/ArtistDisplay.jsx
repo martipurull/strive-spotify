@@ -1,63 +1,73 @@
 import { useEffect, useState } from "react"
 import { useParams, Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { getArtistAction, getTopThreeAction } from "../redux/actions"
 
+const mapStateToProps = state => ({
+    artistToDisplay: state.artist.selectedArtist,
+    topThreeSongs: state.artist.topThreeSongs
+})
 
+const mapDispatchToProps = dispatch => ({
+    getArtist: (artistId) => dispatch(getArtistAction(artistId)),
+    getTopThree: (artistId) => dispatch(getTopThreeAction(artistId))
+})
 
-const ArtistDisplay = () => {
-    const [artistToDisplay, setArtistToDisplay] = useState({})
-    const [topThreeSongs, setTopThreeSongs] = useState([])
+const ArtistDisplay = ({ artistToDisplay, topThreeSongs, getArtist, getTopThree }) => {
+    // const [artistToDisplay, setArtistToDisplay] = useState({})
+    // const [topThreeSongs, setTopThreeSongs] = useState([])
 
     const params = useParams()
-    console.log(params)
+
 
     const [isError, setIsError] = useState(false)
 
-    const getArtist = async (artistId) => {
-        try {
-            const response = await fetch('https://striveschool-api.herokuapp.com/api/deezer/artist/' + artistId, {
-                headers: {
-                    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTgyOGY4NmFhY2FhMjAwMTU1MmExODAiLCJpYXQiOjE2MzY2MzY5MzcsImV4cCI6MTYzNzg0NjUzN30.uqOJ27uEjuSzPvSujE9DuNRI0lJELmoanrTPYDsO6qU"
-                }
-            })
-            if (response.ok) {
-                const artistData = await response.json()
-                setArtistToDisplay(artistData)
-                console.log(artistToDisplay)
-            } else {
-                console.log('response error!')
-                setIsError(true)
-            }
-        } catch (error) {
-            console.log('fetch error!')
-            setIsError(true)
-        }
+    // const getArtist = async (artistId) => {
+    //     try {
+    //         const response = await fetch('https://striveschool-api.herokuapp.com/api/deezer/artist/' + artistId, {
+    //             headers: {
+    //                 "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTgyOGY4NmFhY2FhMjAwMTU1MmExODAiLCJpYXQiOjE2MzY2MzY5MzcsImV4cCI6MTYzNzg0NjUzN30.uqOJ27uEjuSzPvSujE9DuNRI0lJELmoanrTPYDsO6qU"
+    //             }
+    //         })
+    //         if (response.ok) {
+    //             const artistData = await response.json()
+    //             setArtistToDisplay(artistData)
+    //             console.log(artistToDisplay)
+    //         } else {
+    //             console.log('response error!')
+    //             setIsError(true)
+    //         }
+    //     } catch (error) {
+    //         console.log('fetch error!')
+    //         setIsError(true)
+    //     }
 
-    }
+    // }
 
-    const getTopThree = async (artistId) => {
-        try {
-            const response = await fetch('https://striveschool-api.herokuapp.com/api/deezer/artist/' + artistId + '/top?limit=3', {
-                headers: {
-                    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTgyOGY4NmFhY2FhMjAwMTU1MmExODAiLCJpYXQiOjE2MzY2MzY5MzcsImV4cCI6MTYzNzg0NjUzN30.uqOJ27uEjuSzPvSujE9DuNRI0lJELmoanrTPYDsO6qU"
-                }
-            })
-            if (response.ok) {
-                const topThreeData = await response.json()
-                setTopThreeSongs(topThreeData.data)
-            } else {
-                console.log('response error!')
-                setIsError(true)
-            }
-        } catch (error) {
-            console.log('fetch error!')
-            setIsError(true)
-        }
-    }
+    // const getTopThree = async (artistId) => {
+    //     try {
+    //         const response = await fetch('https://striveschool-api.herokuapp.com/api/deezer/artist/' + artistId + '/top?limit=3', {
+    //             headers: {
+    //                 "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTgyOGY4NmFhY2FhMjAwMTU1MmExODAiLCJpYXQiOjE2MzY2MzY5MzcsImV4cCI6MTYzNzg0NjUzN30.uqOJ27uEjuSzPvSujE9DuNRI0lJELmoanrTPYDsO6qU"
+    //             }
+    //         })
+    //         if (response.ok) {
+    //             const topThreeData = await response.json()
+    //             setTopThreeSongs(topThreeData.data)
+    //         } else {
+    //             console.log('response error!')
+    //             setIsError(true)
+    //         }
+    //     } catch (error) {
+    //         console.log('fetch error!')
+    //         setIsError(true)
+    //     }
+    // }
 
     useEffect(() => {
         getArtist(params.artistId)
         getTopThree(params.artistId)
-    })
+    }, [])
 
     return (
         <>
@@ -109,4 +119,4 @@ const ArtistDisplay = () => {
     )
 }
 
-export default ArtistDisplay
+export default connect(mapStateToProps, mapDispatchToProps)(ArtistDisplay)

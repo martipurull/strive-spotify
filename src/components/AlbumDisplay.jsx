@@ -1,43 +1,47 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { selectSongAction } from '../redux/actions'
+import { getAlbumAction, selectSongAction } from '../redux/actions'
 
-const mapStateToProps = state => ({ selectedSong: state.songs.selectedSong })
+const mapStateToProps = state => ({
+    selectedSong: state.songs.selectedSong,
+    albumToDisplay: state.album.selectedAlbum,
+    albumIdToFetch: state.album.albumIdToFetch,
+})
 const mapDispatchToProps = dispatch => ({
-    selectSong: (song) => dispatch(selectSongAction(song))
+    selectSong: (song) => { dispatch(selectSongAction(song)) },
+    getAlbum: (albumId) => { dispatch(getAlbumAction(albumId)) }
 })
 
 
-const AlbumDisplay = ({ selectedSong, selectSong }) => {
+const AlbumDisplay = ({ selectSong, getAlbum, albumToDisplay }) => {
 
-    const [albumToDisplay, setAlbumToDisplay] = useState({})
+    // const [albumToDisplay, setAlbumToDisplay] = useState({})
 
     const params = useParams()
-    console.log(params)
 
     const [isError, setIsError] = useState(false)
 
-    const getAlbum = async (albumId) => {
-        try {
-            const response = await fetch('https://striveschool-api.herokuapp.com/api/deezer/album/' + albumId, {
-                headers: {
-                    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTgyOGY4NmFhY2FhMjAwMTU1MmExODAiLCJpYXQiOjE2MzY2MzY5MzcsImV4cCI6MTYzNzg0NjUzN30.uqOJ27uEjuSzPvSujE9DuNRI0lJELmoanrTPYDsO6qU"
-                }
-            })
-            if (response.ok) {
-                const albumData = await response.json()
-                setAlbumToDisplay(albumData)
-                console.log(albumToDisplay)
-            } else {
-                console.log('response error!')
-                setIsError(true)
-            }
-        } catch (error) {
-            console.log('fetch error!')
-            setIsError(true)
-        }
-    }
+    // const getAlbum = async (albumId) => {
+    //     try {
+    //         const response = await fetch('https://striveschool-api.herokuapp.com/api/deezer/album/' + albumId, {
+    //             headers: {
+    //                 "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTgyOGY4NmFhY2FhMjAwMTU1MmExODAiLCJpYXQiOjE2MzY2MzY5MzcsImV4cCI6MTYzNzg0NjUzN30.uqOJ27uEjuSzPvSujE9DuNRI0lJELmoanrTPYDsO6qU"
+    //             }
+    //         })
+    //         if (response.ok) {
+    //             const albumData = await response.json()
+    //             setAlbumToDisplay(albumData)
+    //             console.log(albumToDisplay)
+    //         } else {
+    //             console.log('response error!')
+    //             setIsError(true)
+    //         }
+    //     } catch (error) {
+    //         console.log('fetch error!')
+    //         setIsError(true)
+    //     }
+    // }
 
     const getDuration = (seconds) => {
         const minutes = Math.floor(seconds / 60)
@@ -46,8 +50,8 @@ const AlbumDisplay = ({ selectedSong, selectSong }) => {
     }
 
     useEffect(() => {
-        console.log(params)
         getAlbum(params.albumId)
+        console.log('inside useEffect:', albumToDisplay);
         // eslint-disable-next-line
     }, [])
 

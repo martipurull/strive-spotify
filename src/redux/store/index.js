@@ -11,6 +11,7 @@ export const initialState = {
         likedSongs: []
     },
     artist: {
+        searchTerm: 'sting',
         selectedArtist: {},
         topThreeSongs: [],
         homeDisplay: []
