@@ -1,47 +1,28 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { getAlbumAction, selectSongAction } from '../redux/actions'
+import { addToPlayingQueueAction, getAlbumAction, selectSongAction } from '../redux/actions'
+import { ListStars } from 'react-bootstrap-icons'
 
 const mapStateToProps = state => ({
     selectedSong: state.songs.selectedSong,
     albumToDisplay: state.album.selectedAlbum,
     albumIdToFetch: state.album.albumIdToFetch,
+    playingQueue: state.songs.playingQueue
+
 })
 const mapDispatchToProps = dispatch => ({
     selectSong: (song) => { dispatch(selectSongAction(song)) },
-    getAlbum: (albumId) => { dispatch(getAlbumAction(albumId)) }
+    getAlbum: (albumId) => { dispatch(getAlbumAction(albumId)) },
+    addToPlayingQueue: (song) => { dispatch(addToPlayingQueueAction(song)) }
 })
 
 
-const AlbumDisplay = ({ selectSong, getAlbum, albumToDisplay }) => {
-
-    // const [albumToDisplay, setAlbumToDisplay] = useState({})
+const AlbumDisplay = ({ selectSong, getAlbum, albumToDisplay, addToPlayingQueue, playingQueue }) => {
 
     const params = useParams()
 
     const [isError, setIsError] = useState(false)
-
-    // const getAlbum = async (albumId) => {
-    //     try {
-    //         const response = await fetch('https://striveschool-api.herokuapp.com/api/deezer/album/' + albumId, {
-    //             headers: {
-    //                 "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTgyOGY4NmFhY2FhMjAwMTU1MmExODAiLCJpYXQiOjE2MzY2MzY5MzcsImV4cCI6MTYzNzg0NjUzN30.uqOJ27uEjuSzPvSujE9DuNRI0lJELmoanrTPYDsO6qU"
-    //             }
-    //         })
-    //         if (response.ok) {
-    //             const albumData = await response.json()
-    //             setAlbumToDisplay(albumData)
-    //             console.log(albumToDisplay)
-    //         } else {
-    //             console.log('response error!')
-    //             setIsError(true)
-    //         }
-    //     } catch (error) {
-    //         console.log('fetch error!')
-    //         setIsError(true)
-    //     }
-    // }
 
     const getDuration = (seconds) => {
         const minutes = Math.floor(seconds / 60)
@@ -81,8 +62,11 @@ const AlbumDisplay = ({ selectSong, getAlbum, albumToDisplay }) => {
                         <div key={track.id} class="row">
                             <div id="trackList" class="col-md-10 mb-5">
                                 <div id="err"></div>
-                                <div class="py-3 trackHover" onClick={() => selectSong(track)}>
-                                    <span class="card-title trackHover px-3" style={{ color: "white" }}>{track.title}</span>
+                                <div class="py-3 trackHover">
+                                    {
+                                        !playingQueue.includes(track.id) && <ListStars color="white" size={24} onClick={() => addToPlayingQueue(track.id)} />
+                                    }
+                                    <span class="card-title trackHover px-3" style={{ color: "white" }} onClick={() => selectSong(track)}>{track.title}</span>
                                     <small class="duration pe-3" style={{ color: "white" }}>{getDuration(track.duration)}</small>
                                 </div>
                             </div>

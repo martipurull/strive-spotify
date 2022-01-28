@@ -6,7 +6,7 @@ export const songsReducer = (state = initialState.songs, action) => {
         case ADD_TO_PLAYING_QUEUE: {
             return {
                 ...state,
-                playingQueue: [...state.songs.playingQueue, action.payload]
+                playingQueue: [...state.playingQueue, action.payload]
             }
         }
         case SELECT_SONG: {
@@ -18,7 +18,7 @@ export const songsReducer = (state = initialState.songs, action) => {
         case ADD_TO_LIKED_SONGS: {
             return {
                 ...state,
-                likedSongs: [...state.songs.likedSongs, action.payload]
+                likedSongs: [...state.likedSongs, action.payload]
             }
         }
         default: return state

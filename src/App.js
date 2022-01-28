@@ -18,8 +18,8 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <SideBar />
         <Container fluid>
+          <SideBar />
           <Row>
             <Routes>
               <Route path="/" element={<HomePage setAlbumId={setAlbumId} setArtistId={setArtistId} />} />
