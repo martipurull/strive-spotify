@@ -5,9 +5,11 @@ import PlayIcon from '../assets/playerbuttons/Play.png'
 import PreviousIcon from '../assets/playerbuttons/Previous.png'
 import RepeatIcon from '../assets/playerbuttons/Repeat.png'
 import ShuffleIcon from '../assets/playerbuttons/Shuffle.png'
+import { connect } from 'react-redux'
 
+const mapStateToProps = state => ({ selectedSong: state.songs.selectedSong })
 
-const BottomBar = () => {
+const BottomBar = ({ selectedSong }) => {
 
     return (
         <div className="player container-fluid fixed-bottom bg-container pt-1">
@@ -70,4 +72,4 @@ const BottomBar = () => {
     )
 }
 
-export default BottomBar
+export default connect(mapStateToProps)(BottomBar)

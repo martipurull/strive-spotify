@@ -1,8 +1,15 @@
 import { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { selectSongAction } from '../redux/actions'
+
+const mapStateToProps = state => ({ selectedSong: state.songs.selectedSong })
+const mapDispatchToProps = dispatch => ({
+    selectSong: (song) => dispatch(selectSongAction(song))
+})
 
 
-const AlbumDisplay = () => {
+const AlbumDisplay = ({ selectedSong, selectSong }) => {
 
     const [albumToDisplay, setAlbumToDisplay] = useState({})
 
@@ -70,10 +77,8 @@ const AlbumDisplay = () => {
                         <div key={track.id} class="row">
                             <div id="trackList" class="col-md-10 mb-5">
                                 <div id="err"></div>
-                                <div class="py-3 trackHover">
-                                    <Link to="/">
-                                        <span class="card-title trackHover px-3" style={{ color: "white" }}>{track.title}</span>
-                                    </Link>
+                                <div class="py-3 trackHover" onClick={() => selectSong(track)}>
+                                    <span class="card-title trackHover px-3" style={{ color: "white" }}>{track.title}</span>
                                     <small class="duration pe-3" style={{ color: "white" }}>{getDuration(track.duration)}</small>
                                 </div>
                             </div>
@@ -86,4 +91,4 @@ const AlbumDisplay = () => {
     )
 }
 
-export default AlbumDisplay
+export default connect(mapStateToProps, mapDispatchToProps)(AlbumDisplay)

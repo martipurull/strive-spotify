@@ -4,7 +4,7 @@ import { mainReducer } from '../reducers'
 
 const ultimateCompose = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
-export const intialState = {
+export const initialState = {
     songs: {
         playingQueue: [],
         selectedSong: {},

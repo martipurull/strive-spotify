@@ -7,12 +7,12 @@ export const addToPlayingQueueAction = (song) => ({
     payload: song
 })
 
-export const selectSong = (song) => ({
+export const selectSongAction = (song) => ({
     type: SELECT_SONG,
     payload: song
 })
 
-export const addToLikedSongs = (song) => ({
+export const addToLikedSongsAction = (song) => ({
     type: ADD_TO_LIKED_SONGS,
     payload: song
 })
