@@ -1,8 +1,18 @@
 import { Link } from 'react-router-dom'
 import { HouseDoor, Book } from 'react-bootstrap-icons'
 import SpotifyLogo from "../assets/Spotify_Logo.png"
+import { useState } from 'react'
+import { connect } from 'react-redux'
+import { useDebounce } from 'use-debounce'
+import { setSearchTermAction } from '../redux/actions'
 
-const SideBar = () => {
+const mapStateToProps = state => ({ searchTermFromStore: state.artist.searchTerm })
+const mapDispatchToProps = dispatch => ({
+    setSearchTermFromStore: (searchTerm) => dispatch(setSearchTermAction(searchTerm))
+})
+
+const SideBar = ({ searchTermFromStore, setSearchTermFromStore }) => {
+    const [searchTerm, setSearchTerm] = useState(searchTermFromStore)
 
     return (
         <div className="col-2">
@@ -57,6 +67,10 @@ const SideBar = () => {
                                             placeholder="Search"
                                             aria-label="Search"
                                             aria-describedby="basic-addon2"
+                                            onChange={(e) => setSearchTerm(e.target.value)}
+                                            onKeyUp={e => {
+                                                e.key === 'Enter' && setSearchTermFromStore(searchTerm)
+                                            }}
                                         />
                                         <div className="input-group-append" style={{ marginBottom: '4%' }}>
                                             <button className="btn btn-outline-secondary btn-sm" type="button" id="button-addon1">
@@ -86,4 +100,4 @@ const SideBar = () => {
     )
 }
 
-export default SideBar
+export default connect(mapStateToProps, mapDispatchToProps)(SideBar)

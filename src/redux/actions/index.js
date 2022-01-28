@@ -7,10 +7,16 @@ export const SET_SELECTED_ALBUM = 'SET_SELECTED_ALBUM'
 export const SET_TOP_THREE = 'SET_TOP_THREE'
 export const SET_HOME_DISPLAY = 'SET_HOME_DISPLAY'
 export const SET_ALBUM_ID_TO_FETCH = 'SET_ALBUM_ID_TO_FETCH'
+export const SET_SEARCH_TERM = 'SET_SEARCH_TERM'
 
 const headers = {
     "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTgyOGY4NmFhY2FhMjAwMTU1MmExODAiLCJpYXQiOjE2MzY2MzY5MzcsImV4cCI6MTYzNzg0NjUzN30.uqOJ27uEjuSzPvSujE9DuNRI0lJELmoanrTPYDsO6qU"
 }
+
+export const setSearchTermAction = (debouncedTerm) => ({
+    type: SET_SEARCH_TERM,
+    payload: debouncedTerm
+})
 
 export const addToPlayingQueueAction = (song) => ({
     type: ADD_TO_PLAYING_QUEUE,

@@ -69,6 +69,7 @@ const ArtistDisplay = ({ artistToDisplay, topThreeSongs, getArtist, getTopThree 
         getTopThree(params.artistId)
     }, [])
 
+    console.log(topThreeSongs)
     return (
         <>
             <div className="row">
@@ -94,7 +95,7 @@ const ArtistDisplay = ({ artistToDisplay, topThreeSongs, getArtist, getTopThree 
                     <div class="pt-5 mb-5">
                         <div class="row" id="apiLoaded">
                             {
-                                topThreeSongs?.slice(0, 3).map((song) => (
+                                topThreeSongs?.map((song) => (
                                     <div class="col-sm-auto col-md-auto text-center mb-5">
                                         <Link to="/">
                                             <img

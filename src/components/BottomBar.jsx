@@ -24,6 +24,12 @@ const BottomBar = ({ selectedSong, likedSongs, addToLikedSongs, removeFromLikedS
     const [audio, setAudio] = useState(new Audio(selectedSong.preview))
     const [playing, setPlaying] = useState(false)
 
+    const getDuration = (seconds) => {
+        const minutes = Math.floor(seconds / 60)
+        const secondsRemaining = seconds - minutes * 60
+        return `${ minutes }:${ secondsRemaining }`
+    }
+
     useEffect(() => {
         playing ? audio.play() : audio.pause()
     }, [playing])
@@ -71,7 +77,7 @@ const BottomBar = ({ selectedSong, likedSongs, addToLikedSongs, removeFromLikedS
                                 </div>
                             </div>
                             <div className="progressContainer d-flex align-items-center">
-                                <span className="currentTime">{selectedSong?.duration}</span>
+                                <span className="currentTime">00:00</span>
                                 <div className="progress w-100">
                                     <div
                                         className="progress-bar"
@@ -83,7 +89,7 @@ const BottomBar = ({ selectedSong, likedSongs, addToLikedSongs, removeFromLikedS
                                         <audio></audio>
                                     </div>
                                 </div>
-                                <span className="duration">00:00</span>
+                                <span className="duration">{getDuration(selectedSong?.duration)}</span>
                             </div>
                         </div>
 
