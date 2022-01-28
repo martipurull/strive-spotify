@@ -1,4 +1,4 @@
-import { ADD_TO_LIKED_SONGS, ADD_TO_PLAYING_QUEUE, SELECT_SONG, SET_SELECTED_ARTIST, SET_SELECTED_ALBUM, SET_HOME_DISPLAY, SET_ALBUM_ID_TO_FETCH } from '../actions'
+import { ADD_TO_LIKED_SONGS, ADD_TO_PLAYING_QUEUE, SELECT_SONG, SET_SELECTED_ARTIST, SET_SELECTED_ALBUM, SET_HOME_DISPLAY, SET_ALBUM_ID_TO_FETCH, REMOVE_FROM_LIKED_SONGS } from '../actions'
 import { initialState } from '../store'
 
 export const songsReducer = (state = initialState.songs, action) => {
@@ -19,6 +19,12 @@ export const songsReducer = (state = initialState.songs, action) => {
             return {
                 ...state,
                 likedSongs: [...state.likedSongs, action.payload]
+            }
+        }
+        case REMOVE_FROM_LIKED_SONGS: {
+            return {
+                ...state,
+                likedSongs: state.likedSongs.filter(s => s !== action.payload)
             }
         }
         default: return state

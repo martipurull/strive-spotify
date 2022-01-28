@@ -1,6 +1,7 @@
 export const ADD_TO_PLAYING_QUEUE = 'ADD_TO_PLAYING_QUEUE'
 export const SELECT_SONG = 'SELECT_SONG'
 export const ADD_TO_LIKED_SONGS = 'ADD_TO_LIKED_SONGS'
+export const REMOVE_FROM_LIKED_SONGS = 'REMOVE_FROM_LIKED_SONGS'
 export const SET_SELECTED_ARTIST = 'SET_SELECTED_ARTIST'
 export const SET_SELECTED_ALBUM = 'SET_SELECTED_ALBUM'
 export const SET_TOP_THREE = 'SET_TOP_THREE'
@@ -23,6 +24,11 @@ export const selectSongAction = (song) => ({
 
 export const addToLikedSongsAction = (song) => ({
     type: ADD_TO_LIKED_SONGS,
+    payload: song
+})
+
+export const removeFromLikedSongsAction = (song) => ({
+    type: REMOVE_FROM_LIKED_SONGS,
     payload: song
 })
 
